@@ -11,7 +11,7 @@ public class Persona {
     private int telefono;
     private String correo;
     private String direccion;
-    private String dirección;
+    
 
     public Persona(String nombre, String apellido, int edad) {
         this.nombre = nombre;
