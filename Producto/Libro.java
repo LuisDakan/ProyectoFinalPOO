@@ -41,6 +41,10 @@ public class Libro {
         return id;
     }
 
-
+    @Override
+    public String toString()
+    {
+        return "Titulo: "+this.titulo+" Autor: "+this.autor+" Genero: "+this.genero+" cantidad: "+this.cant+" id: "+this.id;
+    }
     
 }
