@@ -30,7 +30,7 @@ public abstract class Cliente extends Persona{
                     case 2->{parcial=l.getAutor().substring(0, info.length());}
                     case 3->{parcial=l.getGenero().substring(0,info.length());}
                 }
-                if(parcial.equals(info))
+                if(parcial.toLowerCase().equals(info.toLowerCase()))
                 {
                     System.out.println(l);
                     busquedas+=1;
@@ -81,7 +81,7 @@ public abstract class Cliente extends Persona{
                 parcial1=l.getTitulo().substring(0, titulo.length());
                 parcial2=l.getAutor().substring(0, autor.length());
                 parcial3=l.getGenero().substring(0,genero.length());
-                if(parcial1.equals(titulo)&&parcial2.equals(autor)&&parcial3.equals(genero))
+                if(parcial1.toLowerCase().equals(titulo.toLowerCase())&&parcial2.toLowerCase().equals(autor.toLowerCase())&&parcial3.toLowerCase().equals(genero.toLowerCase()))
                 {
                     System.out.println(l);
                     busquedas+=1;
