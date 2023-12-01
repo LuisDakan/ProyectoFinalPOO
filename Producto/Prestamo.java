@@ -30,6 +30,6 @@ public class Prestamo
 
     public void read()
     {
-        System.out.println("Libro: "+book.getTitulo()+" "+retiro.getMonth()+ " "+retiro.getDayOfMonth());
+        System.out.println("Libro: "+book.getTitulo()+" Retirado: "+retiro.getMonth()+ " "+retiro.getDayOfMonth()+" Entrega: "+devolucion.getMonth()+" "+devolucion.getDayOfMonth());
     }
 }

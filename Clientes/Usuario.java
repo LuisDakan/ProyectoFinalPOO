@@ -1,7 +1,8 @@
 
 package Clientes;
 import java.util.ArrayList;
-import Producto.Prestamo;
+import java.util.Scanner;
+import Producto.*;
 /**
  * @author DAPG1
  */
@@ -11,7 +12,7 @@ public class Usuario extends Cliente{
     private String contrasena;
     private int cuenta;
     private ArrayList<Prestamo> prestamos; 
-    
+    static Scanner input=new Scanner(System.in);
     public Usuario(String nombre, String apellido, int edad) {
         super(nombre, apellido, edad);
     }
@@ -23,29 +24,25 @@ public class Usuario extends Cliente{
     public int getCuenta() {
         return cuenta;
     }
-    public void realizarPrestamo()
-    {
-
-    }
     public void reviewPrestamos()
     {
+        for(Prestamo element:prestamos)
+        {
+            element.read();
+        }
+    }
+    public void pedirPrestamo(){
 
     }
-
-    public void devolver()
-    {
-
+    public void devolverLibro(){
+        
     }
-    public void renovarPrestamo()
-    {
-
-    }
-    
     public void donar()
     {
 
     }
-    public void recomponer(){
+    public void recomponer()
+    {
 
     }
     @Override
