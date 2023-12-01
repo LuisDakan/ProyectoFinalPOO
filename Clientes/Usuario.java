@@ -26,15 +26,28 @@ public class Usuario extends Cliente{
     }
     public void reviewPrestamos()
     {
-        for(Prestamo element:prestamos)
+        for(int i=0;i<prestamos.size();i++)
         {
-            element.read();
+            System.out.print(i+") ");
+            prestamos.get(i).read();
         }
     }
-    public void pedirPrestamo(){
-
+    public void pedirPrestamo()
+    {
+        
     }
-    public void devolverLibro(){
+    public Libro devolverLibro()
+    {
+        System.out.println("Que desea devolver?Escoja el numero");
+        reviewPrestamos();        
+        int index=input.nextInt();
+        if(--index>prestamos.size() || index<0)
+        {
+            System.out.println("Prestamo no valido");
+            return null;
+        }
+        //int id=prestamos.get
+        prestamos.remove(index);
         
     }
     public void donar()

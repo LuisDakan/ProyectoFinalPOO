@@ -12,9 +12,9 @@ public class Bibliotecario
         
     }  
     
-    public void devolver()
+    public void devolver(Usuario cliente)
     {
-
+        
     }
     public void renovarPrestamo()
     {
