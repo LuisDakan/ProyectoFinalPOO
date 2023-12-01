@@ -11,7 +11,6 @@ public class Libro {
     private String genero;
     private int cant;
     private long id;
-    
 
     public Libro(String titulo, String autor, String genero, int cant, long id) {
         this.titulo = titulo;
@@ -41,6 +40,10 @@ public class Libro {
         return id;
     }
 
-
+    @Override
+    public String toString()
+    {
+        return "Titulo: "+this.titulo+" Autor: "+this.autor+" Genero: "+this.genero+" cantidad: "+this.cant+" id: "+this.id;
+    }
     
 }

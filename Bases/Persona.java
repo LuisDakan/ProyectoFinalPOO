@@ -11,26 +11,13 @@ public class Persona {
     private int telefono;
     private String correo;
     private String direccion;
-    
 
     public Persona(String nombre, String apellido, int edad) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.edad = edad;
     }
-
-    public void validezCorreo(){
-        
-    }
-    
-    public void validezNumero(){
-        
-    }
-    
-    public void validezDireccion(){
-        
-    }
-    
+       
     public String getNombre() {
         return nombre;
     }
