@@ -59,6 +59,9 @@ public class Usuario extends Cliente{
     {
 
     }
+    public ArrayList<Prestamo> getPrestamos(){
+        return prestamos;
+    }
     @Override
     public String toString() {
 

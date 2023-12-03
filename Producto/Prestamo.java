@@ -29,7 +29,13 @@ public class Prestamo
 
     public void setRetiro()
     {
-        //devolucion=devolucion.plusWeeks(1);
+        devolucion=devolucion.plusWeeks(1);
+    }
+
+    public boolean isOutTime()
+    {
+        LocalDateTime present=LocalDateTime.now();
+        return present.isAfter(devolucion);
     }
 
     public void read()
