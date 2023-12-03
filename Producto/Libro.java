@@ -41,6 +41,14 @@ public class Libro {
         return id;
     }
 
+    public void addCant()
+    {
+        cant++;
+    }
+
+    public void minusCant(){
+        cant--;
+    }
     @Override
     public String toString()
     {

@@ -3,6 +3,8 @@ package Personal;
 import Clientes.Usuario;
 import Producto.*;
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.io.*;
 /**
  * @author DAPG1
  */
@@ -10,24 +12,71 @@ import java.util.Scanner;
 public class Bibliotecario 
 {
     static Scanner input=new Scanner(System.in);
-    public void realizarPrestamo(Usuario usuario)
+    public void realizarPrestamo(Usuario usuario,ArrayList<Libro> general)
     {
-        for(Prestamo element:usuario.getPrestamos())
+        long id=0;
+        int index=0;
+        if(usuario.pedirPrestamo())
         {
-            if(element.isOutTime())
+            return;
+        }
+        System.out.println("Que libro desea pedir prestado\n0)Escriba el id 1)pegar del portapeles)");
+        switch(input.nextInt())
+        {
+            case 1->{System.out.println("Escriba el id");
+                    id=input.nextLong();
+            }
+            case 2->{id=usuario.getPortaPapeles();}
+        }
+        for(int i=0;i<general.size();i++)
+        {
+            if(id==general.get(i).getId())
             {
-                System.out.println("Tiene libros atrasados, no puede realizar prestamos");
-                return;
+                general.get(i).minusCant();
+                index=i;
             }
         }
-        System.out.println("Que libro desea pedir prestado(Escriba el id)");
-        //Abre el archivo
-        //usuario.getPrestamos().add();
+        ObjectOutputStream fileOut;
+        try{
+            fileOut=new ObjectOutputStream(new FileOutputStream("Registro Usuarios")); //Usar singleton
+            for(int i=0;i<general.size();i++)
+            {
+                fileOut.writeObject(general.get(i));
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("Error al abrir el archivo");
+        }
+        usuario.getPrestamos().add(new Prestamo(general.get(index)));
     }  
     
-    public void devolver(Usuario usuario)
+    public void devolver(Usuario usuario,ArrayList<Libro> general)
     {
-        long id=usuario.devolverLibro();usuario.devolverLibro();
+        long id=usuario.devolverLibro();
+        if(id==-1){
+            System.out.println("No es posible realizar la devolucion");
+            return;
+        }
+        for(int i=0;i<general.size();i++)
+        {
+            if(id==general.get(i).getId())
+            {
+                general.get(i).addCant();
+            }
+        }
+        ObjectOutputStream fileOut;
+        try{
+            fileOut=new ObjectOutputStream(new FileOutputStream("Registro Usuarios")); //Usar singleton
+            for(int i=0;i<general.size();i++)
+            {
+                fileOut.writeObject(general.get(i));
+            }
+        }
+        catch(IOException e)
+        {
+            System.out.println("Error al abrir el archivo");
+        }
     }
     public void renovarPrestamo(Usuario usuario)
     {
@@ -49,4 +98,6 @@ public class Bibliotecario
         }
         usuario.getPrestamos().get(index).setRetiro();
     }
+
+
 }

@@ -16,6 +16,7 @@ public abstract class Cliente extends Persona{
     private long portapeles;
     public Cliente(String nombre, String apellido, int edad) {
         super(nombre, apellido, edad);
+        portapeles=0;
     }
     
     public void buscar(String info,int option) {
@@ -105,4 +106,7 @@ public abstract class Cliente extends Persona{
         System.out.println(busquedas+"busquedas encontradas");
     }
     
+    public long getPortaPapeles(){
+        return portapeles;
+    }
 }

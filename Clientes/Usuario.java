@@ -32,9 +32,17 @@ public class Usuario extends Cliente{
             prestamos.get(i).read();
         }
     }
-    public void pedirPrestamo()
+    public boolean pedirPrestamo()
     {
-        
+        for(Prestamo element:prestamos)
+        {
+            if(element.isOutTime()&&recomponer())
+            {
+                System.out.println("No puede realizar prestamos");
+                return true;
+            }
+        }
+        return false;
     }
     public long devolverLibro()
     {
@@ -47,19 +55,39 @@ public class Usuario extends Cliente{
             return -1;
         }
         long id=prestamos.get(index).getBook().getId();
+        if(prestamos.get(index).isOutTime()&&recomponer())
+        {
+            System.out.println("Antes debe pagar la multa");
+            return -1;
+        }
         prestamos.remove(index);
         return id;
         
     }
-    public void donar()
+    public double donar()
     {
-
+        System.out.println("Le agradecemos sus donativo\nIngrese la cantidad que quiera donar");
+        double donative=input.nextDouble();
+        return donative;
     }
-    public void recomponer()
+    private boolean recomponer()
     {
-
+        System.out.println("Debe realizar \n1)Pagar Multa 2)Salir");
+        switch(input.nextInt())
+        {
+            case 1->{
+                System.out.println("Se le desconto 10 pesos");
+                return false;
+            }
+            case 2->{System.out.println();
+                return true;}
+            default->{System.out.println("Opcion no valida");
+                return true;
+            }
+        }
     }
-    public ArrayList<Prestamo> getPrestamos(){
+    public ArrayList<Prestamo> getPrestamos()
+    {
         return prestamos;
     }
     @Override
