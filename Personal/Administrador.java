@@ -4,9 +4,8 @@ package Personal;
 import Clientes.*;
 import Producto.Libro;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
-
-
 
 /**
  * @author DAPG1
@@ -22,14 +21,14 @@ public class Administrador extends Cliente{
     donaciones de usuarios junto con pagad del registro
     */
     
-    public Usuario buscarU(int cuenta){
+    public Usuario buscarU(Usuario usuario){
         ObjectInputStream fileIn = null;
         try{
             fileIn = new ObjectInputStream(new FileInputStream("Registro Usuarios"));
             while (true) 
             {
                 Usuario u = (Usuario) fileIn.readObject();
-                if(u.getCuenta()==cuenta){
+                if(usuario == u){
                     fileIn.close();
                     return u;
                 }
@@ -81,6 +80,7 @@ public class Administrador extends Cliente{
         try {
             fileOut= new ObjectOutputStream(new FileOutputStream("Registro Usuarios"));
             fileOut.writeObject(usuario);
+            fileOut.flush();
             fileOut.close();
         }catch (IOException e) {
             System.out.println("Error al escribir objetos en el archivo: " + e.getMessage());
@@ -130,66 +130,83 @@ public class Administrador extends Cliente{
     }
     
     public void registrarL(Libro libro){
-        ObjectOutputStream fileOut= null;
+        String linea = "\n"+libro.getTitulo()+";"+libro.getAutor()+";"+libro.getGenero()+";"+libro.getCant()+";"+libro.getId();
+        PrintWriter fileOut= null;
         try {
-            fileOut= new ObjectOutputStream(new FileOutputStream("Registro Usuarios"));
-            fileOut.writeObject(libro);
+            fileOut= new PrintWriter(new BufferedWriter(new FileWriter("Biblioteca.csv",true)));
+            //fileOut.print("\n");
+            fileOut.print(linea);
+            fileOut.flush();
             fileOut.close();
+        }catch (IOException e){
+            System.out.println("Error al escribir objetos en el archivo: " + e.getMessage());
+        }
+        registrarLibros("Biblioteca.csv");
+        
+    }
+    
+    //correcto
+    public void registrarLibros(String archivo){
+        BufferedReader fileIn= null;
+        ObjectOutputStream fileOut= null;
+        String linea;
+       
+        try {
+            fileIn= new BufferedReader(new FileReader(archivo));
+            fileOut= new ObjectOutputStream(new FileOutputStream("Registro Libros"));
+            while((linea=fileIn.readLine()) != null){
+                String[] partes = linea.split(";");
+                Libro l = new Libro(partes[0],partes[1],partes[2], Integer.parseInt(partes[3]), Integer.parseInt(partes[4]));
+                //System.out.println(l);
+                fileOut.writeObject(l);  
+            }
+            fileOut.flush();
+            fileOut.close();
+            fileIn.close();
         }catch (IOException e) {
             System.out.println("Error al escribir objetos en el archivo: " + e.getMessage());
         }
     }
     
     
-    
     public void eliminarL(Libro libro){
-        HashMap<Long, Libro> temporal = new HashMap<>();
-        ObjectInputStream fileIn = null;
-        
+        ArrayList<String> temporal = new ArrayList<>();
+        String datos = libro.getTitulo()+";"+libro.getAutor()+";"+libro.getGenero()+";"+libro.getCant()+";"+libro.getId();        
+        BufferedReader fileIn= null;
+        String linea;
+        System.out.println("datos: "+ datos);
         try{
-            fileIn = new ObjectInputStream(new FileInputStream("Registro Libros"));
-            while (true) 
-            {
-                Libro l = (Libro) fileIn.readObject();
-                if(l.getId()!=libro.getId()){
-                    temporal.put(l.getId(), l);
+            fileIn= new BufferedReader(new FileReader("Biblioteca.csv"));
+            while ((linea=fileIn.readLine()) != null){
+                if(!linea.equals(datos)){
+                    temporal.add( linea);
                 }
             }
-        }catch(EOFException e){
-            try{
-                fileIn.close();
-            }catch(IOException ex){
-                System.out.println("Error al cerrar el archivo: " + ex.getMessage());
-            }            
+            fileIn.close();     
         }catch (IOException e) {
             System.out.println("Error al abrir el archivo: " + e.getMessage());
-        } catch (ClassNotFoundException e) {
-            System.out.println("Error clase no encontrada: " + e.getMessage());
         }
+        System.out.println(temporal.contains(datos));
         
-        ObjectOutputStream fileOut= null;
-        try{
-            File file = new File("Registro Libros");
-            file.delete();
+        File file = new File("Biblioteca.csv");
+        file.delete();
+        
+        PrintWriter fileOut= null;
+        try {
+            fileOut= new PrintWriter(new BufferedWriter(new FileWriter("Biblioteca.csv")));
+            //fileOut.print("\n");
             
-            fileOut= new ObjectOutputStream(new FileOutputStream("Registro Libros"));
-            for(Long I: temporal.keySet()){
-                fileOut.writeObject(temporal.get(I));
+            fileOut.print(temporal.get(0));
+            for(int i=1; i<temporal.size();i++){
+                fileOut.print("\n"+temporal.get(i));
+                fileOut.flush();
             }
-            fileOut.close(); 
-        }catch(IOException e){
-            System.out.println("Error al eliminar libro: " + e.getMessage());
-        }
+            fileOut.close();
+        }catch (IOException e){
+            System.out.println("Error al escribir objetos en el archivo: " + e.getMessage());
+        }        
+        registrarLibros("Biblioteca.csv");
     }
-
-
-    
-    @Override  //el de libro por titulo
-    public void buscar(String info,int option){
-        
-    }
-    
-    
     
     
 }
