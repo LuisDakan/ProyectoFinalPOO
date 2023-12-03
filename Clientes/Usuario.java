@@ -36,7 +36,7 @@ public class Usuario extends Cliente{
     {
         
     }
-    public Libro devolverLibro()
+    public long devolverLibro()
     {
         System.out.println("Que desea devolver?Escoja el numero");
         reviewPrestamos();        
@@ -44,10 +44,11 @@ public class Usuario extends Cliente{
         if(--index>prestamos.size() || index<0)
         {
             System.out.println("Prestamo no valido");
-            return null;
+            return -1;
         }
-        //int id=prestamos.get
+        long id=prestamos.get(index).getBook().getId();
         prestamos.remove(index);
+        return id;
         
     }
     public void donar()

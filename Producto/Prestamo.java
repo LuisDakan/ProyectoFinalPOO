@@ -13,6 +13,10 @@ public class Prestamo
         devolucion=retiro.plusWeeks(1);
     }
     
+    public Libro getBook()
+    {
+        return book;
+    }
     public LocalDateTime getRetiro()
     {
         return retiro;
