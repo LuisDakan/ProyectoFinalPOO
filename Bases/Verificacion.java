@@ -9,6 +9,7 @@ import Bases.Exceptions.*;
 
 public class Verificacion {
     
+    
     public static void formatoNombre(String n){
         for(int i=0; i<n.length();i++){
             if(!Character.isLetter(n.charAt(i))){
@@ -72,7 +73,4 @@ public class Verificacion {
         }
     }
     
-    public static void formatoDireccion(String direccion){
-        
-    }
 }

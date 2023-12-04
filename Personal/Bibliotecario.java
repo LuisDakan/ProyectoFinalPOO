@@ -14,16 +14,37 @@ import java.io.*;
  */
 
 public class Bibliotecario extends Cliente{
-    
+    private static Bibliotecario instance = null;
     static Scanner input=new Scanner(System.in);
     
-    public Bibliotecario(String nombre, String apellido, int edad) {
+    private Bibliotecario(String nombre, String apellido, int edad) {
         super(nombre, apellido, edad);
     }
     
+    public static Bibliotecario getInstance(){
+        if(instance==null){
+            instance = new Bibliotecario( "Bibliotecario","02",30);
+        }
+        return instance;
+    }
+    
     @Override
-    public void donacion(){
-        
+    public void mostrarDatos(){
+        ObjectInputStream fileIn = null;
+        try{
+            fileIn = new ObjectInputStream(new FileInputStream("Registro Prestamos"));
+            while(true) 
+            {
+                Usuario u = (Usuario) fileIn.readObject();
+                System.out.println(u);
+            }
+        }catch(EOFException e){
+
+        }catch (IOException e) {
+            System.out.println("Error al abrir el archivo: " + e.getMessage());
+        } catch (ClassNotFoundException e) {
+            System.out.println("Error clase no encontrada: " + e.getMessage());
+        }
     }
     
     public void crearRegistroP(){
@@ -116,7 +137,6 @@ public class Bibliotecario extends Cliente{
         }
     }
     
-    
     public boolean verificarPrestamo(Usuario usuario){
         ObjectInputStream fileIn = null;
         File file = new File("Registro Prestamos");
@@ -141,10 +161,6 @@ public class Bibliotecario extends Cliente{
         
         return false;
     } 
-    
-    
-    
-    
     
     public void realizarPrestamo(Usuario usuario,ArrayList<Libro> general){
         long id=0;
@@ -233,8 +249,7 @@ public class Bibliotecario extends Cliente{
         }
     }
     
-    public void renovarPrestamo(Usuario usuario)
-    {
+    public void renovarPrestamo(Usuario usuario){
         for(Prestamo element:usuario.getPrestamos()){
             if(element.isOutTime()){
                 System.out.println("Tiene libros atrasados, no puede renovar");
@@ -242,7 +257,7 @@ public class Bibliotecario extends Cliente{
             }
         }
         System.out.println("Escriba el numero del libro que desea renovar");
-        usuario.reviewPrestamos();
+        usuario.mostrarDatos();
         int index=input.nextInt();
         if(--index>usuario.getPrestamos().size() || index<0){
             System.out.println("Prestamo no valido");
@@ -250,6 +265,5 @@ public class Bibliotecario extends Cliente{
         }
         usuario.getPrestamos().get(index).setRetiro();
     }
-    
     
 }

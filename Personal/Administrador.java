@@ -13,18 +13,19 @@ import java.util.ArrayList;
  */
 
 public class Administrador extends Cliente{
+    private static Administrador instance = null;
+    private String contra;
 
-    public Administrador(String nombre, String apellido, int edad) {
+    private Administrador(String contra, String nombre, String apellido, int edad) {
         super(nombre, apellido, edad);
+        this.contra = contra;
     }
-    /*
-    cuentas
-    donaciones de usuarios junto con pagad del registro
-    */
     
-    @Override
-    public void donacion(){
-        
+    public static Administrador getInstance(){
+        if(instance==null){
+            instance = new Administrador("Admin de los Admins", "Administrador","01",30);
+        }
+        return instance;
     }
     
     public static void crearRegistro(String name){
@@ -38,7 +39,28 @@ public class Administrador extends Cliente{
             }
         }
     }
+    
+    public Usuario buscarU(int cuenta, String contra){
+        ObjectInputStream fileIn = null;
+        try{
+            fileIn = new ObjectInputStream(new FileInputStream("Registro Usuarios"));
+            while(true) 
+            {
+                Usuario u = (Usuario) fileIn.readObject();
+                if(cuenta == u.getCuenta() && contra.equals(u.getContra())){
+                    return u;
+                }
+            }
+        }catch(EOFException e){
 
+        }catch (IOException e) {
+            System.out.println("Error al abrir el archivo: " + e.getMessage());
+        } catch (ClassNotFoundException e) {
+            System.out.println("Error clase no encontrada: " + e.getMessage());
+        }
+        System.out.println("El usuario no existe dentro del sistema de la biblioteca");
+        return null;
+    }
     
     public Usuario buscarU(int cuenta){
         ObjectInputStream fileIn = null;
@@ -53,6 +75,28 @@ public class Administrador extends Cliente{
             }
         }catch(EOFException e){
 
+        }catch (IOException e) {
+            System.out.println("Error al abrir el archivo: " + e.getMessage());
+        } catch (ClassNotFoundException e) {
+            System.out.println("Error clase no encontrada: " + e.getMessage());
+        }
+        System.out.println("El usuario no existe dentro del sistema de la biblioteca");
+        return null;
+    }
+    
+    public Usuario buscarU(String nombre, String apellido,String contra){
+        ObjectInputStream fileIn = null;
+        try{
+            fileIn = new ObjectInputStream(new FileInputStream("Registro Usuarios"));
+            while (true) 
+            {
+                Usuario u = (Usuario) fileIn.readObject();
+                if( u.getNombre().toLowerCase().equals(nombre.toLowerCase()) && u.getApellido().toLowerCase().equals(apellido.toLowerCase()) && u.getContra().equals(contra)   ){
+                    return u;
+                }
+            }
+        }catch(EOFException e){
+            
         }catch (IOException e) {
             System.out.println("Error al abrir el archivo: " + e.getMessage());
         } catch (ClassNotFoundException e) {
@@ -267,6 +311,24 @@ public class Administrador extends Cliente{
                     
     }
     
-    
+    @Override
+    public void mostrarDatos(){
+        ObjectInputStream fileIn = null;
+        try{
+            fileIn = new ObjectInputStream(new FileInputStream("Registro Usuarios"));
+            while(true) 
+            {
+                Usuario u = (Usuario) fileIn.readObject();
+                System.out.println(u);
+            }
+        }catch(EOFException e){
+
+        }catch (IOException e) {
+            System.out.println("Error al abrir el archivo: " + e.getMessage());
+        } catch (ClassNotFoundException e) {
+            System.out.println("Error clase no encontrada: " + e.getMessage());
+        }
+    }
+
 }
 

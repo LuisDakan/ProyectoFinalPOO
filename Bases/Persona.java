@@ -46,5 +46,14 @@ public class Persona implements Serializable{
     public void setCorreo(String correo) {
         this.correo = correo;
     }
+
+    @Override
+    public String toString() {
+        return "Persona{" + "nombre=" + nombre + ", apellido=" + apellido + ", edad=" + edad + ", telefono=" + telefono + ", correo=" + correo + '}';
+    }
+
+    
+    
+    
     
 }
