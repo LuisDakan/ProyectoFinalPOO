@@ -11,12 +11,15 @@ import java.util.Scanner;
  */
 
 public abstract class Cliente extends Persona{
-    
     static Scanner input=new Scanner(System.in);
-    private long portapeles;
+    
+    
     public Cliente(String nombre, String apellido, int edad) {
         super(nombre, apellido, edad);
+        
     }
+    
+    public abstract void mostrarDatos();
     
     public void buscar(String info,int option) {
         ObjectInputStream fileIn = null;
@@ -47,11 +50,7 @@ public abstract class Cliente extends Persona{
             System.out.println("Error clase no encontrada: " + e.getMessage());
         }
         System.out.println(busquedas+"busquedas encontradas");
-        System.out.println("Desea guardar algun id? 0)No 1)Si");  //Checar si se pued realizar con interfaz
-        if(input.nextInt()==1)
-        {
-            System.out.println("Escriba el id");
-        }
+        
     }
     
     public Libro buscar(long id){
@@ -66,22 +65,22 @@ public abstract class Cliente extends Persona{
                 }
             }
         } catch (EOFException e) {
-
+            System.out.println("EL libro no existe dentro del sistema de la biblioteca");
         } catch (IOException e) {
             System.out.println("Error al abrir el archivo: " + e.getMessage());
         } catch (ClassNotFoundException e) {
             System.out.println("Error clase no encontrada: " + e.getMessage());
         }
-        System.out.println("EL libro no existe dentro del sistema de la biblioteca");
+        
         return null;
     }
     
-    public void buscar(String titulo,String autor, String genero)
-    {
+    public long buscar(String titulo,String autor, String genero){
+        long id = -1;
         ObjectInputStream fileIn = null;
         int busquedas=0;
         String parcial1,parcial2,parcial3;
-        try {
+        try{
             fileIn = new ObjectInputStream(new FileInputStream("Registro Libros"));
             while (true) 
             {
@@ -103,6 +102,16 @@ public abstract class Cliente extends Persona{
             System.out.println("Error clase no encontrada: " + e.getMessage());
         }
         System.out.println(busquedas+"busquedas encontradas");
+        
+        System.out.println("Desea guardar algun Id? 0)No 1)Si");  
+        if(input.nextInt()==1)
+        {
+            System.out.println("Escriba el id");
+            id = input.nextLong();
+        }
+        return id;
     }
+    
+    
     
 }

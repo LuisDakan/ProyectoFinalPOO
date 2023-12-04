@@ -1,39 +1,41 @@
 package Producto;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
-public class Prestamo 
-{
+
+public class Prestamo implements Serializable{
     private Libro book;
     private LocalDateTime retiro;
     private LocalDateTime devolucion;
 
-    public Prestamo(Libro book)
-    {
+    public Prestamo(Libro book){
         this.book=book;
         retiro=LocalDateTime.now();
         devolucion=retiro.plusWeeks(1);
     }
     
-    public Libro getBook()
-    {
+    public Libro getBook(){
         return book;
     }
-    public LocalDateTime getRetiro()
-    {
+        
+    public LocalDateTime getRetiro(){
         return retiro;
     }
 
-    public LocalDateTime getDevolucion()
-    {
+    public LocalDateTime getDevolucion(){
         return devolucion;
     }
 
-    public void setRetiro()
-    {
-        //devolucion=devolucion.plusWeeks(1);
+    public void setRetiro(){
+        devolucion=LocalDateTime.now().plusWeeks(1);
     }
 
-    public void read()
-    {
+    public boolean isOutTime(){
+        LocalDateTime present=LocalDateTime.now();
+        return present.isAfter(devolucion);
+    }
+        
+    public void read(){
         System.out.println("Libro: "+book.getTitulo()+" Retirado: "+retiro.getMonth()+ " "+retiro.getDayOfMonth()+" Entrega: "+devolucion.getMonth()+" "+devolucion.getDayOfMonth());
     }
 }

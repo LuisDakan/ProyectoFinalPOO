@@ -1,17 +1,18 @@
 package Producto;
 
+import java.io.Serializable;
+
 /**
  * @author DAPG1
  */
 
-public class Libro {
+public class Libro implements Serializable{
 
     private String titulo;
     private String autor;
     private String genero;
     private int cant;
     private long id;
-    
 
     public Libro(String titulo, String autor, String genero, int cant, long id) {
         this.titulo = titulo;
@@ -41,10 +42,18 @@ public class Libro {
         return id;
     }
 
+    public void addCant(){
+        cant++;
+    }
+
+    public void minusCant(){
+        cant--;
+    }
+    
     @Override
     public String toString()
     {
-        return "Titulo: "+this.titulo+" Autor: "+this.autor+" Genero: "+this.genero+" cantidad: "+this.cant+" id: "+this.id;
+        return "Titulo: "+this.titulo+" Autor: "+this.autor+" Genero: "+this.genero+" Cantidad: "+this.cant+" Id: "+this.id;
     }
     
 }

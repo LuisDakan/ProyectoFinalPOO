@@ -1,36 +1,24 @@
 package Bases;
 
+import java.io.Serializable;
+
 /**
  * @author DAPG1
  */
 
-public class Persona {
+public class Persona implements Serializable{
     private String nombre;
     private String apellido;
     private int edad;
     private int telefono;
     private String correo;
-    private String direccion;
     
-
     public Persona(String nombre, String apellido, int edad) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.edad = edad;
     }
-
-    public void validezCorreo(){
-        
-    }
-    
-    public void validezNumero(){
-        
-    }
-    
-    public void validezDireccion(){
-        
-    }
-    
+       
     public String getNombre() {
         return nombre;
     }
@@ -51,10 +39,6 @@ public class Persona {
         return correo;
     }
 
-    public String getDireccion() {
-        return direccion;
-    }
-
     public void setTelefono(int telefono) {
         this.telefono = telefono;
     }
@@ -62,5 +46,14 @@ public class Persona {
     public void setCorreo(String correo) {
         this.correo = correo;
     }
+
+    @Override
+    public String toString() {
+        return "Persona{" + "nombre=" + nombre + ", apellido=" + apellido + ", edad=" + edad + ", telefono=" + telefono + ", correo=" + correo + '}';
+    }
+
+    
+    
+    
     
 }
