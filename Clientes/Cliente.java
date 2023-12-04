@@ -4,16 +4,25 @@ package Clientes;
 import Bases.Persona;
 import Producto.Libro;
 import java.io.*;
+import java.util.Scanner;
 
 /**
  * @author DAPG1
  */
 
 public abstract class Cliente extends Persona{
+    static Scanner input=new Scanner(System.in);
+    private long portapeles;
+    
     
     public Cliente(String nombre, String apellido, int edad) {
         super(nombre, apellido, edad);
+        portapeles=0;
     }
+    
+    public abstract void donacion();
+    
+    
     
     public void buscar(String info,int option) {
         ObjectInputStream fileIn = null;
@@ -37,45 +46,40 @@ public abstract class Cliente extends Persona{
                 }
             }
         } catch (EOFException e) {
-            try{
-                fileIn.close();
-            }catch(IOException ex){
-                System.out.println("Error al cerrar el archivo: " + ex.getMessage());
-            }
+
         } catch (IOException e) {
             System.out.println("Error al abrir el archivo: " + e.getMessage());
-        } catch (ClassNotFoundException e){
+        } catch (ClassNotFoundException e) {
             System.out.println("Error clase no encontrada: " + e.getMessage());
         }
         System.out.println(busquedas+"busquedas encontradas");
+        System.out.println("Desea guardar algun id? 0)No 1)Si");  //Checar si se pued realizar con interfaz
+        if(input.nextInt()==1)
+        {
+            System.out.println("Escriba el id");
+        }
     }
     
-    public Libro buscar(int id){
+    public Libro buscar(long id){
         ObjectInputStream fileIn = null;
-        Libro l=null;
         try {
             fileIn = new ObjectInputStream(new FileInputStream("Registro Libros"));
-            while (true){
-                l = (Libro) fileIn.readObject();
-                //System.out.println(l);
+            while (true) {
+                Libro l = (Libro) fileIn.readObject();
                 if (id==l.getId()){
+                    fileIn.close();
                     return l;
                 }
             }
         } catch (EOFException e) {
-            try{
-                fileIn.close();
-            }catch(IOException ex){
-                System.out.println("Error al cerrar el archivo: " + ex.getMessage());
-            }
             System.out.println("EL libro no existe dentro del sistema de la biblioteca");
-            return null;
         } catch (IOException e) {
-            System.out.println(" C Error al abrir el archivo: " + e.getMessage());
+            System.out.println("Error al abrir el archivo: " + e.getMessage());
         } catch (ClassNotFoundException e) {
             System.out.println("Error clase no encontrada: " + e.getMessage());
         }
-        return l;
+        
+        return null;
     }
     
     public void buscar(String titulo,String autor, String genero)
@@ -98,17 +102,17 @@ public abstract class Cliente extends Persona{
                 }
             }
         } catch (EOFException e) {
-            try{
-                fileIn.close();
-            }catch(IOException ex){
-                System.out.println("Error al cerrar el archivo: " + ex.getMessage());
-            }            
+
         } catch (IOException e) {
             System.out.println("Error al abrir el archivo: " + e.getMessage());
         } catch (ClassNotFoundException e) {
             System.out.println("Error clase no encontrada: " + e.getMessage());
         }
         System.out.println(busquedas+"busquedas encontradas");
+    }
+    
+    public long getPortaPapeles(){
+        return portapeles;
     }
     
 }

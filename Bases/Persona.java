@@ -1,17 +1,18 @@
 package Bases;
 
+import java.io.Serializable;
+
 /**
  * @author DAPG1
  */
 
-public class Persona {
+public class Persona implements Serializable{
     private String nombre;
     private String apellido;
     private int edad;
     private int telefono;
     private String correo;
-    private String direccion;
-
+    
     public Persona(String nombre, String apellido, int edad) {
         this.nombre = nombre;
         this.apellido = apellido;
@@ -36,10 +37,6 @@ public class Persona {
 
     public String getCorreo() {
         return correo;
-    }
-
-    public String getDireccion() {
-        return direccion;
     }
 
     public void setTelefono(int telefono) {

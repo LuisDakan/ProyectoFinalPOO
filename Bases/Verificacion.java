@@ -1,6 +1,8 @@
 
 package Bases;
 
+import Bases.Exceptions.*;
+
 /**
  * @author DAPG1
  */
@@ -10,7 +12,7 @@ public class Verificacion {
     public static void formatoNombre(String n){
         for(int i=0; i<n.length();i++){
             if(!Character.isLetter(n.charAt(i))){
-                throw new FormatNombreException("No debe contener numeros");
+                throw new FormatNombreException("No debe contener numeros o caracteres especiales");
             }
         }
         for(int i=1; i<n.length();i++){
@@ -23,8 +25,10 @@ public class Verificacion {
         }
     }
     
+
+    
     public static void validezEdad(int edad){
-        if(edad<12 || edad>100){
+        if(edad<12 || edad>120){
             throw new RangoNumeroException("La edad no es valida");
         }
     }       

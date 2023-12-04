@@ -11,4 +11,14 @@ public class Invitado extends Cliente{
         super(nombre, apellido, edad);
     }
     
+    public boolean leer(){
+        
+        
+        return true;
+    }
+
+    @Override
+    public void donacion() {
+        
+    }
 }

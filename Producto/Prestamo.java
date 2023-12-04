@@ -27,9 +27,14 @@ public class Prestamo implements Serializable{
     }
 
     public void setRetiro(){
-        //devolucion=devolucion.plusWeeks(1);
+        devolucion=LocalDateTime.now().plusWeeks(1);
     }
 
+    public boolean isOutTime(){
+        LocalDateTime present=LocalDateTime.now();
+        return present.isAfter(devolucion);
+    }
+        
     public void read(){
         System.out.println("Libro: "+book.getTitulo()+" Retirado: "+retiro.getMonth()+ " "+retiro.getDayOfMonth()+" Entrega: "+devolucion.getMonth()+" "+devolucion.getDayOfMonth());
     }

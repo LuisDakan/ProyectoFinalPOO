@@ -12,9 +12,9 @@ public class Libro implements Serializable{
     private String autor;
     private String genero;
     private int cant;
-    private int id;
+    private long id;
 
-    public Libro(String titulo, String autor, String genero, int cant, int id) {
+    public Libro(String titulo, String autor, String genero, int cant, long id) {
         this.titulo = titulo;
         this.autor = autor;
         this.genero = genero;
@@ -38,10 +38,18 @@ public class Libro implements Serializable{
         return cant;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
+    public void addCant(){
+        cant++;
+    }
+
+    public void minusCant(){
+        cant--;
+    }
+    
     @Override
     public String toString()
     {
